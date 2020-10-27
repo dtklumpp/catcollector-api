@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .models import Cat, Toy
@@ -121,3 +122,22 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
+# --- API Cats ---
+
+
+def api_cats_index(request):
+    cats = list(Cat.objects.values().all())
+    return JsonResponse({'data': cats})
+
+
+def api_cats_show(request, cat_id):
+    cat = Cat.objects.values().get(id=cat_id)
+    return JsonResponse({'data': cat})
+
+
+@csrf_exempt
+def api_search(request):
+    import json
+    search_term = json.loads(request.body).get("search")
+    cats = list(Cat.objects.values().filter(name=search_term))
+    return JsonResponse({'status': 200, 'data': cats})

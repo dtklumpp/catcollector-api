@@ -15,5 +15,8 @@ urlpatterns = [
          views.assoc_toy, name='assoc_toy'),
     path('cats/<int:cat_id>/deassoc_toy/<int:toy_id>/',
          views.deassoc_toy, name='deassoc_toy'),
-    path('accounts/signup/', views.signup, name='signup')
+    path('accounts/signup/', views.signup, name='signup'),
+    path('api/cats/', views.api_cats_index, name='api_cats_index'),
+    path('api/cats/<int:cat_id>/', views.api_cats_show, name='api_cats_show'),
+    path('api/search/', views.api_search, name="api_search")
 ]
